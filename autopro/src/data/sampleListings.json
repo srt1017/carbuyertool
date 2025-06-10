@@ -14,8 +14,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["bucket seats"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2019+Mustang"
+    "options": [
+      "bucket seats"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2019+Mustang",
+    "transmission": "automatic"
   },
   {
     "id": "2",
@@ -32,8 +35,11 @@
     "drivetrain": "AWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["carbon ceramic brakes"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2020+BMW+M3"
+    "options": [
+      "carbon ceramic brakes"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2020+BMW+M3",
+    "transmission": "automatic"
   },
   {
     "id": "3",
@@ -49,9 +55,12 @@
     "doors": 4,
     "drivetrain": "RWD",
     "fuelType": "Gas",
-    "truckOptions": ["lifted"],
+    "truckOptions": [
+      "lifted"
+    ],
     "options": [],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2018+Toyota+Tacoma"
+    "imageUrl": "https://via.placeholder.com/200x120?text=2018+Toyota+Tacoma",
+    "transmission": "automatic"
   },
   {
     "id": "4",
@@ -68,8 +77,12 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim", "sunroof"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2018+CTS-V"
+    "options": [
+      "performance trim",
+      "sunroof"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2018+CTS-V",
+    "transmission": "automatic"
   },
   {
     "id": "5",
@@ -86,8 +99,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2019+Camaro+ZL1"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2019+Camaro+ZL1",
+    "transmission": "manual"
   },
   {
     "id": "6",
@@ -104,8 +120,12 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["carbon ceramic brakes", "performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2020+Corvette+Z06"
+    "options": [
+      "carbon ceramic brakes",
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2020+Corvette+Z06",
+    "transmission": "manual"
   },
   {
     "id": "7",
@@ -122,8 +142,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2021+Charger+Hellcat"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2021+Charger+Hellcat",
+    "transmission": "automatic"
   },
   {
     "id": "8",
@@ -140,8 +163,11 @@
     "drivetrain": "AWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2019+Audi+R8"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2019+Audi+R8",
+    "transmission": "automatic"
   },
   {
     "id": "9",
@@ -158,8 +184,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2020+C63+AMG"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2020+C63+AMG",
+    "transmission": "automatic"
   },
   {
     "id": "10",
@@ -177,7 +206,8 @@
     "fuelType": "Electric",
     "truckOptions": [],
     "options": [],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2022+Model+S+Plaid"
+    "imageUrl": "https://via.placeholder.com/200x120?text=2022+Model+S+Plaid",
+    "transmission": "automatic"
   },
   {
     "id": "11",
@@ -193,9 +223,14 @@
     "doors": 4,
     "drivetrain": "AWD",
     "fuelType": "Gas",
-    "truckOptions": ["lifted"],
-    "options": ["sunroof"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2021+F-150+Raptor"
+    "truckOptions": [
+      "lifted"
+    ],
+    "options": [
+      "sunroof"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2021+F-150+Raptor",
+    "transmission": "automatic"
   },
   {
     "id": "12",
@@ -212,8 +247,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["sunroof"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2020+Land+Cruiser"
+    "options": [
+      "sunroof"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2020+Land+Cruiser",
+    "transmission": "automatic"
   },
   {
     "id": "13",
@@ -230,8 +268,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2017+California+T"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2017+California+T",
+    "transmission": "automatic"
   },
   {
     "id": "14",
@@ -248,8 +289,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["sunroof"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2018+Wraith"
+    "options": [
+      "sunroof"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2018+Wraith",
+    "transmission": "automatic"
   },
   {
     "id": "18",
@@ -266,8 +310,12 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim", "sunroof"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2022+CT4-V+Blackwing"
+    "options": [
+      "performance trim",
+      "sunroof"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2022+CT4-V+Blackwing",
+    "transmission": "manual"
   },
   {
     "id": "19",
@@ -284,8 +332,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2017+Camaro+Z28"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2017+Camaro+Z28",
+    "transmission": "manual"
   },
   {
     "id": "20",
@@ -302,8 +353,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2018+Camaro+ZL1"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2018+Camaro+ZL1",
+    "transmission": "manual"
   },
   {
     "id": "21",
@@ -320,8 +374,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["carbon ceramic brakes"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2021+Corvette+3LT"
+    "options": [
+      "carbon ceramic brakes"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2021+Corvette+3LT",
+    "transmission": "manual"
   },
   {
     "id": "22",
@@ -338,8 +395,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2018+Charger+Demon"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2018+Charger+Demon",
+    "transmission": "automatic"
   },
   {
     "id": "23",
@@ -356,8 +416,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2022+Hellcat+Redeye"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2022+Hellcat+Redeye",
+    "transmission": "manual"
   },
   {
     "id": "24",
@@ -374,8 +437,11 @@
     "drivetrain": "AWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2020+M5+Competition"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2020+M5+Competition",
+    "transmission": "automatic"
   },
   {
     "id": "25",
@@ -392,8 +458,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["carbon ceramic brakes"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2019+M4+Competition"
+    "options": [
+      "carbon ceramic brakes"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2019+M4+Competition",
+    "transmission": "automatic"
   },
   {
     "id": "26",
@@ -410,8 +479,11 @@
     "drivetrain": "AWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["sunroof"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2019+Audi+S7"
+    "options": [
+      "sunroof"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2019+Audi+S7",
+    "transmission": "automatic"
   },
   {
     "id": "27",
@@ -428,8 +500,11 @@
     "drivetrain": "AWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2021+TT+RS"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2021+TT+RS",
+    "transmission": "automatic"
   },
   {
     "id": "28",
@@ -446,8 +521,11 @@
     "drivetrain": "AWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2020+E63+S"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2020+E63+S",
+    "transmission": "automatic"
   },
   {
     "id": "29",
@@ -464,8 +542,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["carbon ceramic brakes"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2020+Giulia+Quadrifoglio"
+    "options": [
+      "carbon ceramic brakes"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2020+Giulia+Quadrifoglio",
+    "transmission": "automatic"
   },
   {
     "id": "30",
@@ -482,8 +563,11 @@
     "drivetrain": "AWD",
     "fuelType": "Electric",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2021+Model+3+Performance"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2021+Model+3+Performance",
+    "transmission": "automatic"
   },
   {
     "id": "31",
@@ -500,8 +584,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2021+Scat+Pack+392"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2021+Scat+Pack+392",
+    "transmission": "automatic"
   },
   {
     "id": "32",
@@ -518,8 +605,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["sunroof"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2020+Lexus+RC+F"
+    "options": [
+      "sunroof"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2020+Lexus+RC+F",
+    "transmission": "automatic"
   },
   {
     "id": "33",
@@ -536,8 +626,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["sunroof"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2019+Lexus+GS+F"
+    "options": [
+      "sunroof"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2019+Lexus+GS+F",
+    "transmission": "automatic"
   },
   {
     "id": "34",
@@ -554,8 +647,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2019+Super+Snake"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2019+Super+Snake",
+    "transmission": "automatic"
   },
   {
     "id": "35",
@@ -572,8 +668,11 @@
     "drivetrain": "AWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["sunroof"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2022+Raptor+R"
+    "options": [
+      "sunroof"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2022+Raptor+R",
+    "transmission": "automatic"
   },
   {
     "id": "36",
@@ -590,8 +689,11 @@
     "drivetrain": "AWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["performance trim"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2021+RAM+TRX"
+    "options": [
+      "performance trim"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2021+RAM+TRX",
+    "transmission": "automatic"
   },
   {
     "id": "37",
@@ -608,8 +710,11 @@
     "drivetrain": "RWD",
     "fuelType": "Diesel",
     "truckOptions": [],
-    "options": ["sunroof"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2018+Rebel+2500"
+    "options": [
+      "sunroof"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2018+Rebel+2500",
+    "transmission": "automatic"
   },
   {
     "id": "38",
@@ -625,9 +730,14 @@
     "doors": 4,
     "drivetrain": "RWD",
     "fuelType": "Diesel",
-    "truckOptions": ["DRW"],
-    "options": ["sunroof"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2020+F-350+Diesel"
+    "truckOptions": [
+      "DRW"
+    ],
+    "options": [
+      "sunroof"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2020+F-350+Diesel",
+    "transmission": "automatic"
   },
   {
     "id": "39",
@@ -643,9 +753,12 @@
     "doors": 4,
     "drivetrain": "RWD",
     "fuelType": "Gas",
-    "truckOptions": ["lifted"],
+    "truckOptions": [
+      "lifted"
+    ],
     "options": [],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2021+Silverado+ZR2"
+    "imageUrl": "https://via.placeholder.com/200x120?text=2021+Silverado+ZR2",
+    "transmission": "automatic"
   },
   {
     "id": "40",
@@ -662,8 +775,11 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["sunroof"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2022+Sierra+Denali"
+    "options": [
+      "sunroof"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2022+Sierra+Denali",
+    "transmission": "automatic"
   },
   {
     "id": "41",
@@ -680,8 +796,11 @@
     "drivetrain": "AWD",
     "fuelType": "Diesel",
     "truckOptions": [],
-    "options": ["sunroof"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2019+Titan+PRO-4X"
+    "options": [
+      "sunroof"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2019+Titan+PRO-4X",
+    "transmission": "automatic"
   },
   {
     "id": "42",
@@ -698,7 +817,10 @@
     "drivetrain": "RWD",
     "fuelType": "Gas",
     "truckOptions": [],
-    "options": ["sunroof"],
-    "imageUrl": "https://via.placeholder.com/200x120?text=2022+Tundra+TRD+Pro"
+    "options": [
+      "sunroof"
+    ],
+    "imageUrl": "https://via.placeholder.com/200x120?text=2022+Tundra+TRD+Pro",
+    "transmission": "automatic"
   }
 ]

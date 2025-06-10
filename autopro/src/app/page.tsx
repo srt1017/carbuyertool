@@ -7,9 +7,14 @@ import ChatWidget from "../components/ChatWidget";
 import sampleListingsData from "../data/sampleListings.json";
 
 export default function HomePage() {
-  const sampleListings: Listing[] = sampleListingsData;
-  const [quickFilter, setQuickFilter] = useState<string>('all');
+  const sampleListings: Listing[] = sampleListingsData.map((listing) => ({
+  ...listing,
+  transmission: listing.transmission === "manual" ? "manual" : "automatic",
+}));
 
+  const [quickFilter, setQuickFilter] = useState<string>("all");
+
+  // -------------- UPDATED FILTER STATE --------------
   const [filters, setFilters] = useState<Filters>({
     zip: "",
     yearMin: null,
@@ -23,12 +28,11 @@ export default function HomePage() {
     fuelType: "",
     lifted: false,
     drw: false,
-    bucketSeats: false,
-    carbonBrakes: false,
-    sunroof: false,
-    performanceTrim: false,
+
+    transmission: "",
+
     maxPctOfMMRAsking: null,
-    maxPctOfMMRRetail: null
+    maxPctOfMMRRetail: null,
   });
 
   const filtered = useMemo(() => {
@@ -46,74 +50,85 @@ export default function HomePage() {
         fuelType,
         lifted,
         drw,
-        bucketSeats,
-        carbonBrakes,
-        sunroof,
-        performanceTrim,
+        transmission,
+
         maxPctOfMMRAsking,
-        maxPctOfMMRRetail
+        maxPctOfMMRRetail,
       } = filters;
 
       // Basic filters
       if (zip && listing.zip !== zip) return false;
       if (yearMin !== null && listing.year < yearMin) return false;
       if (yearMax !== null && listing.year > yearMax) return false;
-      if (make && listing.make.toLowerCase() !== make.toLowerCase()) return false;
-      if (model && listing.model.toLowerCase() !== model.toLowerCase()) return false;
+      if (make && listing.make.toLowerCase() !== make.toLowerCase())
+        return false;
+      if (model && listing.model.toLowerCase() !== model.toLowerCase())
+        return false;
       if (maxMiles !== null && listing.miles > maxMiles) return false;
 
       // Price/MMR filters
       const pctAsking = (listing.price / listing.mmrValue) * 100;
-      if (maxPctOfMMRAsking !== null && pctAsking > maxPctOfMMRAsking) return false;
+      if (maxPctOfMMRAsking !== null && pctAsking > maxPctOfMMRAsking)
+        return false;
 
       const pctRetail = (listing.price / listing.retailValue) * 100;
-      if (maxPctOfMMRRetail !== null && pctRetail > maxPctOfMMRRetail) return false;
+      if (maxPctOfMMRRetail !== null && pctRetail > maxPctOfMMRRetail)
+        return false;
 
       // Category and specs
       if (category && listing.category !== category) return false;
       if (doors !== null && listing.doors !== doors) return false;
       if (drivetrain && listing.drivetrain !== drivetrain) return false;
       if (fuelType && listing.fuelType !== fuelType) return false;
-      
+
       // Truck options
       if (lifted && !listing.truckOptions.includes("lifted")) return false;
-      if (drw && !listing.truckOptions.includes("drw") && !listing.truckOptions.includes("DRW")) return false;
-      
-      // Specific options
-      if (bucketSeats && !listing.options.includes("bucket seats")) return false;
-      if (carbonBrakes && !listing.options.includes("carbon ceramic brakes")) return false;
-      if (sunroof && !listing.options.includes("sunroof")) return false;
-      if (performanceTrim && !listing.options.includes("performance trim")) return false;
+      if (
+        drw &&
+        !listing.truckOptions.includes("drw") &&
+        !listing.truckOptions.includes("DRW")
+      )
+        return false;
+
+      // NEW: transmission filter
+      if (transmission && listing.transmission !== transmission)
+        return false;
 
       return true;
     });
 
     // Apply quick filters from dashboard
     switch (quickFilter) {
-      case 'hot-deals':
-        results = results.filter(l => l.price <= l.mmrValue - 5000);
+      case "hot-deals":
+        results = results.filter((l) => l.price <= l.mmrValue - 5000);
         break;
-      case 'great-deals':
-        results = results.filter(l => l.price <= l.mmrValue - 2000 && l.price > l.mmrValue - 5000);
-        break;
-      case 'under-mmr':
-        results = results.filter(l => l.price < l.mmrValue);
-        break;
-      case 'performance':
-        results = results.filter(l => 
-          l.options.includes('performance trim') || 
-          ['muscle car', 'sports car', 'exotic'].includes(l.category)
+      case "great-deals":
+        results = results.filter(
+          (l) =>
+            l.price <= l.mmrValue - 2000 && l.price > l.mmrValue - 5000
         );
         break;
-      case 'luxury':
-        results = results.filter(l => l.category === 'luxury' || l.category === 'exotic');
+      case "under-mmr":
+        results = results.filter((l) => l.price < l.mmrValue);
         break;
-      case 'trucks':
-        results = results.filter(l => l.category === 'truck' || l.category === 'suv');
+      case "performance":
+        // Only by category now
+        results = results.filter((l) =>
+          ["muscle car", "sports car", "exotic"].includes(l.category)
+        );
         break;
-      case 'recent':
-        // In a real app, you'd filter by date added
-        // For demo, just show first 5
+      case "luxury":
+        results = results.filter(
+          (l) => l.category === "luxury" || l.category === "exotic"
+        );
+        break;
+      case "trucks":
+        results = results.filter(
+          (l) => l.category === "truck" || l.category === "suv"
+        );
+        break;
+      case "recent":
+        // Placeholder: show first 5
         results = results.slice(0, 5);
         break;
     }
@@ -131,28 +146,31 @@ export default function HomePage() {
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* Dashboard */}
-
+        {/* (your quickFilter buttons go here) */}
 
         {/* Listings Grid */}
         <div className="flex-1 p-6 overflow-y-auto">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-bold">
               Car Listings
-              {quickFilter !== 'all' && (
+              {quickFilter !== "all" && (
                 <span className="text-sm font-normal text-gray-500 ml-2">
                   (Filtered)
                 </span>
               )}
             </h1>
             <div className="text-sm text-gray-500">
-              {filtered.length} {filtered.length === 1 ? 'result' : 'results'}
+              {filtered.length}{" "}
+              {filtered.length === 1 ? "result" : "results"}
             </div>
           </div>
 
           {filtered.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-600 text-lg">No listings match your filters.</p>
-              <button 
+              <p className="text-gray-600 text-lg">
+                No listings match your filters.
+              </p>
+              <button
                 onClick={() => {
                   setFilters({
                     zip: "",
@@ -167,14 +185,11 @@ export default function HomePage() {
                     fuelType: "",
                     lifted: false,
                     drw: false,
-                    bucketSeats: false,
-                    carbonBrakes: false,
-                    sunroof: false,
-                    performanceTrim: false,
+                    transmission: "",         // reset
                     maxPctOfMMRAsking: null,
-                    maxPctOfMMRRetail: null
+                    maxPctOfMMRRetail: null,
                   });
-                  setQuickFilter('all');
+                  setQuickFilter("all");
                 }}
                 className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
               >

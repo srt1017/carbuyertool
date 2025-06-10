@@ -25,7 +25,11 @@ interface ChatMessage {
 }
 
 export default function ChatWidget() {
-  const listings: Listing[] = sampleListings;
+  const listings: Listing[] = sampleListings.map((listing) => ({
+  ...listing,
+  transmission: listing.transmission === "manual" ? "manual" : "automatic",
+}));
+
   const [open, setOpen] = useState<boolean>(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     { 

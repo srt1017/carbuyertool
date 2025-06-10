@@ -16,10 +16,7 @@ export interface Filters {
   fuelType: string;
   lifted: boolean;
   drw: boolean;
-  bucketSeats: boolean;
-  carbonBrakes: boolean;
-  sunroof: boolean;
-  performanceTrim: boolean;
+  transmission: string;             // New field
   maxPctOfMMRAsking: number | null;
   maxPctOfMMRRetail: number | null;
 }
@@ -32,25 +29,19 @@ interface Props {
 export default function FilterPanel({ filters, setFilters }: Props) {
   const [local, setLocal] = useState<Filters>(filters);
 
-  // Push local changes back up
+  // Push updates upstream
   useEffect(() => {
     setFilters(local);
   }, [local, setFilters]);
 
-  // Fields that should be parsed as numbers (nullable)
   const numericFields: Array<keyof Filters> = [
-    "yearMin",
-    "yearMax",
-    "maxMiles",
-    "doors",
-    "maxPctOfMMRAsking",
-    "maxPctOfMMRRetail",
+    "yearMin", "yearMax", "maxMiles", "doors",
+    "maxPctOfMMRAsking", "maxPctOfMMRRetail"
   ];
 
   function handleChange(
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: ChangeEvent<HTMLInputElement|HTMLSelectElement>
   ) {
-    // Cast so we can read .checked on both <input type="checkbox"> and <select>
     const target = e.target as HTMLInputElement;
     const name = target.name as keyof Filters;
     const type = target.type;
@@ -59,12 +50,11 @@ export default function FilterPanel({ filters, setFilters }: Props) {
 
     setLocal((prev) => ({
       ...prev,
-      [name]:
-        type === "checkbox"
-          ? checked
-          : numericFields.includes(name)
-          ? (value === "" ? null : Number(value))
-          : value,
+      [name]: type === "checkbox"
+        ? checked
+        : numericFields.includes(name)
+        ? (value === "" ? null : Number(value))
+        : value
     }));
   }
 
@@ -72,7 +62,7 @@ export default function FilterPanel({ filters, setFilters }: Props) {
     <div className="p-4 space-y-4 border-r h-screen overflow-y-auto">
       <h2 className="text-xl font-semibold">Filters</h2>
 
-      {/* ZIP */}
+      {/* ZIP Code */}
       <div>
         <label className="block text-sm font-medium">ZIP Code</label>
         <input
@@ -95,7 +85,6 @@ export default function FilterPanel({ filters, setFilters }: Props) {
             value={local.yearMin ?? ""}
             onChange={handleChange}
             className="mt-1 p-1 w-full border rounded"
-            placeholder="e.g. 2015"
           />
         </div>
         <div>
@@ -106,36 +95,28 @@ export default function FilterPanel({ filters, setFilters }: Props) {
             value={local.yearMax ?? ""}
             onChange={handleChange}
             className="mt-1 p-1 w-full border rounded"
-            placeholder="e.g. 2022"
           />
         </div>
       </div>
 
       {/* Make / Model */}
-      <div>
-        <label className="block text-sm font-medium">Make</label>
-        <input
-          type="text"
-          name="make"
-          value={local.make}
-          onChange={handleChange}
-          className="mt-1 p-1 w-full border rounded"
-          placeholder="e.g. Ford"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium">Model</label>
-        <input
-          type="text"
-          name="model"
-          value={local.model}
-          onChange={handleChange}
-          className="mt-1 p-1 w-full border rounded"
-          placeholder="e.g. Mustang"
-        />
-      </div>
+      {["make","model"].map((fld) => (
+        <div key={fld}>
+          <label className="block text-sm font-medium">
+            {fld.charAt(0).toUpperCase() + fld.slice(1)}
+          </label>
+          <input
+            type="text"
+            name={fld}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            value={(local as any)[fld]}
+            onChange={handleChange}
+            className="mt-1 p-1 w-full border rounded"
+          />
+        </div>
+      ))}
 
-      {/* Miles */}
+      {/* Max Miles */}
       <div>
         <label className="block text-sm font-medium">Max Miles</label>
         <input
@@ -144,35 +125,28 @@ export default function FilterPanel({ filters, setFilters }: Props) {
           value={local.maxMiles ?? ""}
           onChange={handleChange}
           className="mt-1 p-1 w-full border rounded"
-          placeholder="e.g. 50000"
         />
       </div>
 
-      {/* MMR % Filters */}
+      {/* % of MMR */}
       <div>
-        <label className="block text-sm font-medium">
-          % of MMR ≤ Asking
-        </label>
+        <label className="block text-sm font-medium">% of MMR ≤ Asking</label>
         <input
           type="number"
           name="maxPctOfMMRAsking"
           value={local.maxPctOfMMRAsking ?? ""}
           onChange={handleChange}
           className="mt-1 p-1 w-full border rounded"
-          placeholder="e.g. 105"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium">
-          % of MMR ≤ Retail
-        </label>
+        <label className="block text-sm font-medium">% of MMR ≤ Retail</label>
         <input
           type="number"
           name="maxPctOfMMRRetail"
           value={local.maxPctOfMMRRetail ?? ""}
           onChange={handleChange}
           className="mt-1 p-1 w-full border rounded"
-          placeholder="e.g. 95"
         />
       </div>
 
@@ -267,51 +241,19 @@ export default function FilterPanel({ filters, setFilters }: Props) {
         </label>
       </div>
 
-      {/* Specific Options */}
-      <div className="space-y-1">
-        <label className="block text-sm font-medium">
-          Specific Options
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="bucketSeats"
-            checked={local.bucketSeats}
-            onChange={handleChange}
-            className="mr-2"
-          />
-          Bucket Seats
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="carbonBrakes"
-            checked={local.carbonBrakes}
-            onChange={handleChange}
-            className="mr-2"
-          />
-          Carbon Ceramic Brakes
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="sunroof"
-            checked={local.sunroof}
-            onChange={handleChange}
-            className="mr-2"
-          />
-          Sunroof
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="performanceTrim"
-            checked={local.performanceTrim}
-            onChange={handleChange}
-            className="mr-2"
-          />
-          Performance Trim
-        </label>
+      {/* NEW: Transmission */}
+      <div>
+        <label className="block text-sm font-medium">Transmission</label>
+        <select
+          name="transmission"
+          value={local.transmission}
+          onChange={handleChange}
+          className="mt-1 p-1 w-full border rounded"
+        >
+          <option value="">Any</option>
+          <option value="Automatic">Automatic</option>
+          <option value="Manual">Manual</option>
+        </select>
       </div>
     </div>
   );

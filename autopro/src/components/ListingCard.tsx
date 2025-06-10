@@ -15,6 +15,7 @@ export interface Listing {
   truckOptions: string[];
   options: string[];
   imageUrl: string;
+  transmission: "automatic" | "manual"
 }
 
 interface Props {
