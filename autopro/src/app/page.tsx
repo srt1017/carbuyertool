@@ -91,7 +91,8 @@ export default function HomePage() {
         return false;
 
       // NEW: transmission filter
-      if (transmission && listing.transmission !== transmission)
+      if (transmission && listing.transmission !== transmission.toLowerCase())
+
         return false;
 
       return true;

@@ -38,16 +38,29 @@ export default function ListingCard({ listing }: Props) {
     fuelType,
     truckOptions,
     options,
-    imageUrl
+    imageUrl,
+    transmission,
   } = listing;
 
-  const pctMMRAsking = ((price / mmrValue) * 100).toFixed(0);
-  const pctMMRRetail = ((price / retailValue) * 100).toFixed(0);
+  const pctMMRAsking = (price / mmrValue) * 100;
+  const pctMMRRetail = (price / retailValue) * 100;
   const diffFromMMR = Math.abs(price - mmrValue);
   const isCloseToMMR = diffFromMMR <= 1000;
 
+  const dealColor = pctMMRAsking <= 95
+    ? "bg-green-100 text-green-800"
+    : pctMMRAsking <= 102
+    ? "bg-yellow-100 text-yellow-800"
+    : "bg-red-100 text-red-800";
+
+  const dealLabel = pctMMRAsking <= 95
+    ? `${(100 - pctMMRAsking).toFixed(1)}% below wholesale`
+    : `Only ${(pctMMRAsking - 100).toFixed(1)}% above wholesale`;
+
+  const tags = [drivetrain, `${doors} Door`, fuelType, transmission, ...truckOptions, ...options];
+
   return (
-    <div className="border rounded overflow-hidden shadow-sm hover:shadow-md transition">
+    <div className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition bg-white">
       <div className="relative">
         <img
           src={imageUrl}
@@ -60,46 +73,37 @@ export default function ListingCard({ listing }: Props) {
           </span>
         )}
       </div>
-      <div className="p-3">
-        <h3 className="font-semibold">
+      <div className="p-4">
+        <h3 className="font-semibold text-lg text-gray-900">
           {year} {make} {model}
         </h3>
-        <p className="text-sm text-gray-600">
-          {category.charAt(0).toUpperCase() + category.slice(1)}
+        <p className="text-sm text-gray-600 mb-1 capitalize">
+          {category} • {zip} • {miles.toLocaleString()} mi
         </p>
-        <p className="mt-1">
-          <span className="font-bold text-lg">
-            ${price.toLocaleString()}
-          </span>
-          <span className="text-sm text-gray-500 ml-2">
-            (MMR ${mmrValue.toLocaleString()})
-          </span>
+
+        <p className="text-xl font-bold text-gray-900">
+          ${price.toLocaleString()}
         </p>
-        <p className="text-sm text-gray-500">
-          {miles.toLocaleString()} miles • {zip}
-        </p>
-        <div className="mt-2 space-y-1 text-xs">
-          <div>Drivetrain: {drivetrain}</div>
-          <div>Doors: {doors}</div>
-          <div>Fuel: {fuelType}</div>
-          {truckOptions.length > 0 && (
-            <div>Truck Opt: {truckOptions.join(", ")}</div>
-          )}
-          {options.length > 0 && (
-            <div>Options: {options.join(", ")}</div>
-          )}
+        <p className="text-sm text-gray-500">MMR: ${mmrValue.toLocaleString()}</p>
+
+        <div className={`mt-2 inline-block px-2 py-1 text-xs font-semibold rounded ${dealColor}`}>
+          Deal: {pctMMRAsking.toFixed(1)}% of MMR ({dealLabel})
         </div>
-        <div className="mt-2 text-xs flex justify-between">
-          <span className="bg-blue-100 text-blue-800 px-1 rounded">
-            Asked / MMR: {pctMMRAsking}%
-          </span>
-          <span className="bg-green-100 text-green-800 px-1 rounded">
-            Asked / Retail: {pctMMRRetail}%
-          </span>
+
+        <div className="mt-3 flex flex-wrap gap-2">
+          {tags.map((item) => (
+            <span
+              key={item}
+              className="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-0.5 rounded-full"
+            >
+              {item}
+            </span>
+          ))}
         </div>
+
         <a
           href="#"
-          className="mt-3 block text-center bg-blue-600 text-white text-sm py-1 rounded hover:bg-blue-700"
+          className="mt-4 block text-center bg-blue-600 text-white text-sm py-2 rounded hover:bg-blue-700"
         >
           View Details
         </a>
