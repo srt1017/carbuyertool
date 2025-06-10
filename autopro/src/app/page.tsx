@@ -1,103 +1,197 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState, useMemo } from "react";
+import FilterPanel, { Filters } from "../components/FilterPanel";
+import ListingCard, { Listing } from "../components/ListingCard";
+import ChatWidget from "../components/ChatWidget";
+import sampleListingsData from "../data/sampleListings.json";
+
+export default function HomePage() {
+  const sampleListings: Listing[] = sampleListingsData;
+  const [quickFilter, setQuickFilter] = useState<string>('all');
+
+  const [filters, setFilters] = useState<Filters>({
+    zip: "",
+    yearMin: null,
+    yearMax: null,
+    make: "",
+    model: "",
+    maxMiles: null,
+    category: "",
+    doors: null,
+    drivetrain: "",
+    fuelType: "",
+    lifted: false,
+    drw: false,
+    bucketSeats: false,
+    carbonBrakes: false,
+    sunroof: false,
+    performanceTrim: false,
+    maxPctOfMMRAsking: null,
+    maxPctOfMMRRetail: null
+  });
+
+  const filtered = useMemo(() => {
+    let results = sampleListings.filter((listing) => {
+      const {
+        zip,
+        yearMin,
+        yearMax,
+        make,
+        model,
+        maxMiles,
+        category,
+        doors,
+        drivetrain,
+        fuelType,
+        lifted,
+        drw,
+        bucketSeats,
+        carbonBrakes,
+        sunroof,
+        performanceTrim,
+        maxPctOfMMRAsking,
+        maxPctOfMMRRetail
+      } = filters;
+
+      // Basic filters
+      if (zip && listing.zip !== zip) return false;
+      if (yearMin !== null && listing.year < yearMin) return false;
+      if (yearMax !== null && listing.year > yearMax) return false;
+      if (make && listing.make.toLowerCase() !== make.toLowerCase()) return false;
+      if (model && listing.model.toLowerCase() !== model.toLowerCase()) return false;
+      if (maxMiles !== null && listing.miles > maxMiles) return false;
+
+      // Price/MMR filters
+      const pctAsking = (listing.price / listing.mmrValue) * 100;
+      if (maxPctOfMMRAsking !== null && pctAsking > maxPctOfMMRAsking) return false;
+
+      const pctRetail = (listing.price / listing.retailValue) * 100;
+      if (maxPctOfMMRRetail !== null && pctRetail > maxPctOfMMRRetail) return false;
+
+      // Category and specs
+      if (category && listing.category !== category) return false;
+      if (doors !== null && listing.doors !== doors) return false;
+      if (drivetrain && listing.drivetrain !== drivetrain) return false;
+      if (fuelType && listing.fuelType !== fuelType) return false;
+      
+      // Truck options
+      if (lifted && !listing.truckOptions.includes("lifted")) return false;
+      if (drw && !listing.truckOptions.includes("drw") && !listing.truckOptions.includes("DRW")) return false;
+      
+      // Specific options
+      if (bucketSeats && !listing.options.includes("bucket seats")) return false;
+      if (carbonBrakes && !listing.options.includes("carbon ceramic brakes")) return false;
+      if (sunroof && !listing.options.includes("sunroof")) return false;
+      if (performanceTrim && !listing.options.includes("performance trim")) return false;
+
+      return true;
+    });
+
+    // Apply quick filters from dashboard
+    switch (quickFilter) {
+      case 'hot-deals':
+        results = results.filter(l => l.price <= l.mmrValue - 5000);
+        break;
+      case 'great-deals':
+        results = results.filter(l => l.price <= l.mmrValue - 2000 && l.price > l.mmrValue - 5000);
+        break;
+      case 'under-mmr':
+        results = results.filter(l => l.price < l.mmrValue);
+        break;
+      case 'performance':
+        results = results.filter(l => 
+          l.options.includes('performance trim') || 
+          ['muscle car', 'sports car', 'exotic'].includes(l.category)
+        );
+        break;
+      case 'luxury':
+        results = results.filter(l => l.category === 'luxury' || l.category === 'exotic');
+        break;
+      case 'trucks':
+        results = results.filter(l => l.category === 'truck' || l.category === 'suv');
+        break;
+      case 'recent':
+        // In a real app, you'd filter by date added
+        // For demo, just show first 5
+        results = results.slice(0, 5);
+        break;
+    }
+
+    return results;
+  }, [filters, sampleListings, quickFilter]);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="flex h-screen overflow-hidden bg-gray-50">
+      {/* Sidebar */}
+      <aside className="w-72 bg-white border-r overflow-y-auto">
+        <FilterPanel filters={filters} setFilters={setFilters} />
+      </aside>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Main Content */}
+      <main className="flex-1 flex flex-col overflow-hidden">
+        {/* Dashboard */}
+
+
+        {/* Listings Grid */}
+        <div className="flex-1 p-6 overflow-y-auto">
+          <div className="flex justify-between items-center mb-4">
+            <h1 className="text-2xl font-bold">
+              Car Listings
+              {quickFilter !== 'all' && (
+                <span className="text-sm font-normal text-gray-500 ml-2">
+                  (Filtered)
+                </span>
+              )}
+            </h1>
+            <div className="text-sm text-gray-500">
+              {filtered.length} {filtered.length === 1 ? 'result' : 'results'}
+            </div>
+          </div>
+
+          {filtered.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600 text-lg">No listings match your filters.</p>
+              <button 
+                onClick={() => {
+                  setFilters({
+                    zip: "",
+                    yearMin: null,
+                    yearMax: null,
+                    make: "",
+                    model: "",
+                    maxMiles: null,
+                    category: "",
+                    doors: null,
+                    drivetrain: "",
+                    fuelType: "",
+                    lifted: false,
+                    drw: false,
+                    bucketSeats: false,
+                    carbonBrakes: false,
+                    sunroof: false,
+                    performanceTrim: false,
+                    maxPctOfMMRAsking: null,
+                    maxPctOfMMRRetail: null
+                  });
+                  setQuickFilter('all');
+                }}
+                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              >
+                Clear All Filters
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {filtered.map((listing) => (
+                <ListingCard key={listing.id} listing={listing} />
+              ))}
+            </div>
+          )}
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+      <ChatWidget />
     </div>
   );
 }
