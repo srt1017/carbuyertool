@@ -1,17 +1,14 @@
+// app/page.tsx
 "use client";
 
 import { useState, useMemo } from "react";
 import FilterPanel, { Filters } from "../components/FilterPanel";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import ListingCard, { Listing } from "../components/ListingCard";
 import ChatWidget from "../components/ChatWidget";
-import sampleListingsData from "../data/sampleListings.json";
+import { useListings } from "../hooks/useListings";
 
 export default function HomePage() {
-  const sampleListings: Listing[] = sampleListingsData.map((listing) => ({
-  ...listing,
-  transmission: listing.transmission === "manual" ? "manual" : "automatic",
-}));
-
   const [quickFilter, setQuickFilter] = useState<string>("all");
 
   // -------------- UPDATED FILTER STATE --------------
@@ -28,45 +25,44 @@ export default function HomePage() {
     fuelType: "",
     lifted: false,
     drw: false,
-
     transmission: "",
-
     maxPctOfMMRAsking: null,
     maxPctOfMMRRetail: null,
   });
 
+  // Fetch listings from API with basic filters
+  const { 
+    listings: apiListings, 
+    loading, 
+    error, 
+    refetch 
+  } = useListings({
+    make: filters.make || undefined,
+    model: filters.model || undefined,
+    yearMin: filters.yearMin || undefined,
+    yearMax: filters.yearMax || undefined,
+    zip: filters.zip || undefined,
+    category: filters.category || undefined,
+    maxMiles: filters.maxMiles || undefined,
+  });
+
+  // Apply client-side filters that are complex (percentages, truck options, etc.)
   const filtered = useMemo(() => {
-    let results = sampleListings.filter((listing) => {
+    if (loading || !apiListings) return [];
+
+    let results = apiListings.filter((listing) => {
       const {
-        zip,
-        yearMin,
-        yearMax,
-        make,
-        model,
-        maxMiles,
-        category,
         doors,
         drivetrain,
         fuelType,
         lifted,
         drw,
         transmission,
-
         maxPctOfMMRAsking,
         maxPctOfMMRRetail,
       } = filters;
 
-      // Basic filters
-      if (zip && listing.zip !== zip) return false;
-      if (yearMin !== null && listing.year < yearMin) return false;
-      if (yearMax !== null && listing.year > yearMax) return false;
-      if (make && listing.make.toLowerCase() !== make.toLowerCase())
-        return false;
-      if (model && listing.model.toLowerCase() !== model.toLowerCase())
-        return false;
-      if (maxMiles !== null && listing.miles > maxMiles) return false;
-
-      // Price/MMR filters
+      // Client-side filters (complex logic that's better done in memory)
       const pctAsking = (listing.price / listing.mmrValue) * 100;
       if (maxPctOfMMRAsking !== null && pctAsking > maxPctOfMMRAsking)
         return false;
@@ -75,8 +71,7 @@ export default function HomePage() {
       if (maxPctOfMMRRetail !== null && pctRetail > maxPctOfMMRRetail)
         return false;
 
-      // Category and specs
-      if (category && listing.category !== category) return false;
+      // Remaining filters
       if (doors !== null && listing.doors !== doors) return false;
       if (drivetrain && listing.drivetrain !== drivetrain) return false;
       if (fuelType && listing.fuelType !== fuelType) return false;
@@ -90,9 +85,8 @@ export default function HomePage() {
       )
         return false;
 
-      // NEW: transmission filter
+      // Transmission filter
       if (transmission && listing.transmission !== transmission.toLowerCase())
-
         return false;
 
       return true;
@@ -113,7 +107,6 @@ export default function HomePage() {
         results = results.filter((l) => l.price < l.mmrValue);
         break;
       case "performance":
-        // Only by category now
         results = results.filter((l) =>
           ["muscle car", "sports car", "exotic"].includes(l.category)
         );
@@ -129,13 +122,41 @@ export default function HomePage() {
         );
         break;
       case "recent":
-        // Placeholder: show first 5
         results = results.slice(0, 5);
         break;
     }
 
     return results;
-  }, [filters, sampleListings, quickFilter]);
+  }, [filters, apiListings, quickFilter, loading]);
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading listings...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">Error loading listings: {error}</p>
+          <button
+            onClick={refetch}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-50">
@@ -146,9 +167,8 @@ export default function HomePage() {
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-hidden">
-        {/* Dashboard */}
-        {/* (your quickFilter buttons go here) */}
-
+        {/* Dashboard - Add your quick filter buttons here */}
+        
         {/* Listings Grid */}
         <div className="flex-1 p-6 overflow-y-auto">
           <div className="flex justify-between items-center mb-4">
@@ -186,7 +206,7 @@ export default function HomePage() {
                     fuelType: "",
                     lifted: false,
                     drw: false,
-                    transmission: "",         // reset
+                    transmission: "",
                     maxPctOfMMRAsking: null,
                     maxPctOfMMRRetail: null,
                   });

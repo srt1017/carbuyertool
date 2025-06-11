@@ -55,7 +55,7 @@ export default function ListingCard({ listing }: Props) {
 
   const dealLabel = pctMMRAsking <= 95
     ? `${(100 - pctMMRAsking).toFixed(1)}% below wholesale`
-    : `Only ${(pctMMRAsking - 100).toFixed(1)}% above wholesale`;
+    : `${(pctMMRAsking - 100).toFixed(1)}% above wholesale`;
 
   const tags = [drivetrain, `${doors} Door`, fuelType, transmission, ...truckOptions, ...options];
 
